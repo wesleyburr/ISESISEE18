@@ -12,18 +12,93 @@
 class: center, middle, inverse, title-slide
 
 # Particulate Matter Observations: Imputation and Correction
-### Wesley S. Burr – <a href="http://www.trentu.ca/math/">Trent University</a> <br> <a href="http://github.com/wesleyburr"><i class="fa fa-github fa-fw"></i>  wsburr</a><br> <a href="http://twitter.com/wsburr"> <i class="fa fa-twitter fa-fw"></i>  <span class="citation">@wsburr</span></a><br> <a href="mailto:wesleyburr@trentu.ca"><i class="fa fa-paper-plane fa-fw"></i>  wesleyburr@trentu.ca</a><br> &amp; <br>Hwashin H. Shin – Health Canada &amp; <a href="http://mast.queensu.ca/">Queen's University</a>
+### Wesley S. Burr – <a href="http://www.trentu.ca/math/">Trent University</a> <br> <a href="http://github.com/wesleyburr"><i class="fa fa-github fa-fw"></i>  wsburr</a><br> <a href="http://twitter.com/wsburr"> <i class="fa fa-twitter fa-fw"></i>  <span class="citation">@wsburr</span></a><br> <a href="mailto:wesleyburr@trentu.ca"><i class="fa fa-paper-plane fa-fw"></i>  wesleyburr@trentu.ca</a><br><br/>&amp;<br/><br/>Hwashin H. Shin – Health Canada &amp; <a href="http://mast.queensu.ca/">Queen's University</a>
 ### 2018-07-17   <br><br> Slides available at <a href="http://bit.ly/ties18" class="uri">http://bit.ly/ties18</a>
 
 ---
 
 
 class: inverse
-layout: true
 
-&lt;!--.footer[Slides available at &lt;http://bit.ly/ties18&gt;]--&gt;
+
+
+## The Inspiration 
+
+Health Canada and Environment and Climate Change Canada are
+currently funding a joint study on the risk relationship
+between exposure to particulate matter.
+
+&lt;br&gt;
+
+--
+  - specifically particulate matter **components**
+--
+
+  - historical component data is limited
+--
+
+  - satellite remote sensing data **may** be usable (&lt;a href="http://www.canue.ca"&gt;**will**&lt;/a&gt; be usable in the near future)
 
 ---
+
+class: inverse
+
+## The Problem
+
+- large numbers of missing observations in the **local** data
+- coarse resolution for both temporal and spatial dimensions in the
+  **remotely** sensed data
+- mis-match in temporal coverage
+
+&lt;br&gt;
+--
+
+**Can the two be used to improve one another?**
+
+---
+
+class: inverse middle
+
+&lt;small&gt;Students at Virginia Tech studied which vehicles come to a
+&lt;font color="mediumpurple"&gt;complete stop&lt;/font&gt; at an intersection with
+four-way stop signs, selecting at random the cars to observe. 
+The &lt;font color="lightgreen"&gt;explanatory&lt;/font&gt; variable used here is the arrival
+position of vehicles approaching an intersection all traveling in the
+same direction. They classified this arrival pattern into three groups:
+whether the vehicle arrives alone (&lt;code&gt;&lt;small&gt;single&lt;/small&gt;&lt;/code&gt;),
+is the &lt;code&gt;&lt;small&gt;lead&lt;/small&gt;&lt;/code&gt; in a group of
+vehicles, or is a &lt;code&gt;&lt;small&gt;follow&lt;/small&gt;&lt;/code&gt;er in
+a group of vehicles. Is there an association between &lt;font
+color="lightgreen"&gt;arrival pattern&lt;/font&gt; and whether a &lt;code&gt;&lt;font
+color="purple"&gt;&lt;small&gt;complete&lt;/small&gt;&lt;/font&gt;&lt;/code&gt; stop or &lt;code&gt;&lt;font
+color="purple"&gt;&lt;small&gt;not_complete&lt;/small&gt;&lt;/font&gt;&lt;/code&gt; was made?&lt;/small&gt;
+
+&lt;br&gt;
+
+&lt;tiny&gt;- From &lt;a href="http://math.hope.edu/isi/"&gt; 
+"Introduction to Statistical Investigations"
+&lt;/a&gt; by Tintle et al.&lt;/tiny&gt;
+
+---
+layout: false
+class: inverse, middle
+
+&lt;center&gt;
+&lt;a href="http://www.trentu.ca/math/"&gt;&lt;img src="figure/trent.png" style="width: 230px;"/&gt;&lt;/a&gt; &amp;emsp;&amp;emsp;
+&lt;a href="http://mast.queensu.ca/"&gt;&lt;img src="figure/queens_black.png" style="width: 175px;"/&gt;&lt;/a&gt; &amp;emsp;&amp;emsp;
+&lt;a href="https://creativecommons.org/licenses/by/4.0/"&gt;&lt;img src="figure/cc.png" style="width: 220px;"/&gt;&lt;/a&gt;
+&lt;/center&gt;
+
+## Thanks for listening!
+
+- Contact me: [Email](mailto:wesleyburr@trentu.ca) or [Twitter](https://twitter.com/wsburr)
+- Slides created via the R package [xaringan](https://github.com/yihui/xaringan) by Yihui Xie
+- Slides and code at &lt;http://bit.ly/ties18&gt;
+
+&lt;br/&gt;
+
+This research was partially funded under a &lt;a href="http://www.canssi.ca/"&gt;CANSSI&lt;/a&gt; Collaborative Research Team Project,
+&lt;a href="http://www.canssi.ca/canssi-collaborative-research-team-projects/modern-spectrum-methods-in-time-series-analysis-physical-science-environmental-science-and-computer-modeling/"&gt;*Modern Spectrum Methods in Time Series Analysis*&lt;/a&gt;.
     </textarea>
 <script src="remark-latest.min.js"></script>
 <script>var slideshow = remark.create({

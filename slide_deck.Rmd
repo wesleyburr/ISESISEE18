@@ -1,6 +1,6 @@
 ---
 title: "Particulate Matter Observations: Imputation and Correction"
-author: 'Wesley S. Burr -- <a href="http://www.trentu.ca/math/">Trent University</a> <br> <a href="http://github.com/wesleyburr"><i class="fa fa-github fa-fw"></i>&nbsp; wsburr</a><br> <a href="http://twitter.com/wsburr"> <i class="fa fa-twitter fa-fw"></i>&nbsp; @wsburr</a><br> <a href="mailto:wesleyburr@trentu.ca"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; wesleyburr@trentu.ca</a><br> &amp; <br>Hwashin H. Shin -- Health Canada &amp; <a href="http://mast.queensu.ca/">Queen&#39;s University</a>'
+author: 'Wesley S. Burr -- <a href="http://www.trentu.ca/math/">Trent University</a> <br> <a href="http://github.com/wesleyburr"><i class="fa fa-github fa-fw"></i>&nbsp; wsburr</a><br> <a href="http://twitter.com/wsburr"> <i class="fa fa-twitter fa-fw"></i>&nbsp; @wsburr</a><br> <a href="mailto:wesleyburr@trentu.ca"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; wesleyburr@trentu.ca</a><br><br/>&amp;<br/><br/>Hwashin H. Shin -- Health Canada &amp; <a href="http://mast.queensu.ca/">Queen&#39;s University</a>'
 date: 2018-07-17 &ensp; <br><br> Slides available at <http://bit.ly/ties18>
 output:
   xaringan::moon_reader:
@@ -17,11 +17,6 @@ output:
 ---
 
 class: inverse
-layout: true
-
-<!--.footer[Slides available at <http://bit.ly/ties18>]-->
-
----
 
 ```{r include=FALSE}
 library(ggplot2)
@@ -31,4 +26,80 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.width=10.5, fig.height=4
 theme_set(theme_gray(base_size = 24))
 ```
 
+## The Inspiration 
 
+Health Canada and Environment and Climate Change Canada are
+currently funding a joint study on the risk relationship
+between exposure to particulate matter.
+
+<br>
+
+--
+  - specifically particulate matter **components**
+--
+
+  - historical component data is limited
+--
+
+  - satellite remote sensing data **may** be usable (<a href="http://www.canue.ca">**will**</a> be usable in the near future)
+
+---
+
+class: inverse
+
+## The Problem
+
+- large numbers of missing observations in the **local** data
+- coarse resolution for both temporal and spatial dimensions in the
+  **remotely** sensed data
+- mis-match in temporal coverage
+
+<br>
+--
+
+**Can the two be used to improve one another?**
+
+---
+
+class: inverse middle
+
+<small>Students at Virginia Tech studied which vehicles come to a
+<font color="mediumpurple">complete stop</font> at an intersection with
+four-way stop signs, selecting at random the cars to observe. 
+The <font color="lightgreen">explanatory</font> variable used here is the arrival
+position of vehicles approaching an intersection all traveling in the
+same direction. They classified this arrival pattern into three groups:
+whether the vehicle arrives alone (<code><small>single</small></code>),
+is the <code><small>lead</small></code> in a group of
+vehicles, or is a <code><small>follow</small></code>er in
+a group of vehicles. Is there an association between <font
+color="lightgreen">arrival pattern</font> and whether a <code><font
+color="purple"><small>complete</small></font></code> stop or <code><font
+color="purple"><small>not_complete</small></font></code> was made?</small>
+
+<br>
+
+<tiny>- From <a href="http://math.hope.edu/isi/"> 
+"Introduction to Statistical Investigations"
+</a> by Tintle et al.</tiny>
+
+---
+layout: false
+class: inverse, middle
+
+<center>
+<a href="http://www.trentu.ca/math/"><img src="figure/trent.png" style="width: 230px;"/></a> &emsp;&emsp;
+<a href="http://mast.queensu.ca/"><img src="figure/queens_black.png" style="width: 175px;"/></a> &emsp;&emsp;
+<a href="https://creativecommons.org/licenses/by/4.0/"><img src="figure/cc.png" style="width: 220px;"/></a>
+</center>
+
+## Thanks for listening!
+
+- Contact me: [Email](mailto:wesleyburr@trentu.ca) or [Twitter](https://twitter.com/wsburr)
+- Slides created via the R package [xaringan](https://github.com/yihui/xaringan) by Yihui Xie
+- Slides and code at <http://bit.ly/ties18>
+
+<br/>
+
+This research was partially funded under a <a href="http://www.canssi.ca/">CANSSI</a> Collaborative Research Team Project,
+<a href="http://www.canssi.ca/canssi-collaborative-research-team-projects/modern-spectrum-methods-in-time-series-analysis-physical-science-environmental-science-and-computer-modeling/">*Modern Spectrum Methods in Time Series Analysis*</a>.
