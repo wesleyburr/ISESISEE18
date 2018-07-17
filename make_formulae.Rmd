@@ -1,0 +1,32 @@
+---
+title: "MakeFormulae"
+author: "Wesley Burr"
+date: "July 16, 2018"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Token Formulae
+
+Given two series $x_1(t)$ and $x_2(t)$, $t = 0, \cdots, N-1$, form robust power spectrum estimates $\hat{S}_1(f)$ and $\hat{S}_2(f)$:
+
+$$
+\hat{S}_i(f) = \frac{1}{K} \sum_{k=0}^{K-1} \left|\sum_{t=0}^{N-1} x_i(t) \cdot v^{(k)}(t) \cdot e^{-i2\pi f t}\right|^2 = \frac{1}{K} \sum_{k=0}^{K-1} \left| y_i^{(k)}(f) \right|^2
+$$
+and then also estimate the robust cross-spectra $\hat{S}_{12}(f)$ and $\hat{S}_{21}(f)$:
+
+$$
+\hat{S}_{ij}(f) = \frac{1}{K} \sum_{k=0}^{K-1} y_i^{(k)}(f) \cdot \overline{y_j^{(k)}}(f),
+$$
+which, upon inversion, give $\hat{R}_{12}$ and $\hat{R}_{21}$, robust estimates of the real-valued cross-covariance. 
+
+Finally, form a block-matrix representing the $\tau$-lagged cross-covariance between the two approximately stationary residual series as:
+$$
+R_{jm}(-\tau_j(r)) = \sum_{i=1}^{p} \sum_{q=1}^{n_i} \beta_{iq}^* R_{ji}(\tau_j(r) - \tau_i(q))
+$$
+the bivariate form of the classical prediction equation $\Gamma_n \phi_n = \gamma_n$, and solve it numerically using $\hat{R}_{12}$, etc.
