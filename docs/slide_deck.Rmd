@@ -106,9 +106,19 @@ and back to 2001 for PM<sub>2.5</sub> (2010 annual average: 7 &mu;g/m<sup>3</sup
 
 ---
 
-class: middle
+class: middle, inverse
 
-**Put an air pollution map in here: make one?**
+## Transboundary Influence, Annual PM<sub>2.5</sub>, Ontario
+
+<img src="figure/toronto_annual_pm25.png" width="900">
+
+---
+
+class: inverse
+
+## National Air Pollution Surveillance stations
+
+<img src="figure/toronto_stations_present.png" width="1000">
 
 ---
 
@@ -118,7 +128,7 @@ class: inverse
 
 * Lengthy delays in satellite data availability from collaborators
 * Replaced with Terra MODIS aerosol optical depth
-* Focused on Toronto area for 2012
+* Demonstrated on Toronto area for 2012 for this talk
 
 ---
 
@@ -139,15 +149,17 @@ missing observations in a second.
 
 ---
 
-class: inverse
+class: middle
 
 ## Token Formulae
 
 <img src="figure/formulae.png" width="1200">
 
+**Lots** of missing details - algebra is fairly nasty, but [code](http://github.com/wesleyburr/tsinterp/) available.
+
 ---
 
-class: inverse
+class: middle
 
 ## Example: Noon Solar 10.7cm Flux, DRAO
 
@@ -162,39 +174,23 @@ class: inverse
 
 Thus, we have a bivariate interpolation algorithm. So, given
 **missing observations in the ground-level observations**
-we can iterate the algorithm convergence and obtain a contiguous series by using remotely sensed data as a **baseline** for the interpolator.
+we can iterate the algorithm convergence and obtain a contiguous series by using remotely sensed data as a secondary series for the interpolator.
 
 ---
 
-class: inverse, middle
+class: middle
 
-## Slide 13 
+## Organic Carbon, 2012, Toronto, Ontario (one station)
 
-(show some component data: EC, etc.)
-
----
-
-class: inverse, middle
-
-## Slide 14
-
-(naniar)
+<img src="figure/original_OC.png" width="1000">
 
 ---
 
-class: inverse, middle
+class: middle
 
-## Slide 15
+## Interpolated Organic Carbon, using MODIS
 
-(output from AOS?)
-
----
-
-class: inverse, middle
-
-## Graphical Result
-
-(interpolation)
+<img src="figure/interpolated_OC.png" width="1000">
 
 ---
 
@@ -208,11 +204,11 @@ Thus, using satellite data, **despite** the
 
 * Complicated relationship (correlated, not coincident)
 * Varying temporal resolution
-* Missing-at-random observations
+* Missing (at random?) observations
 
 <br>
 
-has given us a contiguous **ground-level** particulate matter component series. 
+we can derive a contiguous **ground-level** particulate matter component series.
 
 ---
 
@@ -238,9 +234,27 @@ class: inverse
 <br>
 
 * Possibly not!
-* Creative use of tempora-spatial statistics and field estimation may bypass need
+* Creative use of spatio-temporal statistics and field estimation may bypass need
 * However, contiguous data is still required for spectrum estimation, **and**
 * Scientific exploration of data is strongly aided by understanding of the periodic structure inherent in air pollution, generated as it is by humans
+
+---
+
+layout: false
+class: inverse, middle
+
+## Future Work
+
+While the interpolator(s) are functionally complete, tested, and ready
+for use, the application to remote-sensed data is still very much
+a Work In Progress.
+
+<br>
+
+* Extend to spatial considerations - multiple stations simultaneously?
+* Use as correction tool: given observation, delete, and interpolate - big differences imply unexpected observations (statistically)
+* Complete data set (apply to all stations in Canada)
+* Reverse order: use ground-level to detect and screen remotely-sensed data?
 
 ---
 
