@@ -167,6 +167,19 @@ class: middle
 
 ---
 
+class: middle
+
+## Half-Baked Idea
+
+<center>
+<img src="figure/half_baked.jpg", width="350">
+</center>
+
+<br>
+
+**Full Disclosure**: some of the following may not be fully baked.
+---
+
 layout: false
 class: inverse
 
