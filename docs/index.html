@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Particulate Matter Observations: Imputation and Correction</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Wesley S. Burr – Trent University     wsburr     @wsburr    wesleyburr@trentu.ca  &amp;  Hwashin H. Shin – Health Canada &amp; Queen's University" />
+    <script src="https://use.fontawesome.com/5235085b15.js"></script>
+    <link rel="stylesheet" href="example.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Particulate Matter Observations: Imputation and Correction
+### Wesley S. Burr – <a href="http://www.trentu.ca/math/">Trent University</a> <br> <a href="http://github.com/wesleyburr"><i class="fa fa-github fa-fw"></i>  wsburr</a><br> <a href="http://twitter.com/wsburr"> <i class="fa fa-twitter fa-fw"></i>  <span class="citation">@wsburr</span></a><br> <a href="mailto:wesleyburr@trentu.ca"><i class="fa fa-paper-plane fa-fw"></i>  wesleyburr@trentu.ca</a><br><br/>&amp;<br/><br/>Hwashin H. Shin – Health Canada &amp; <a href="http://mast.queensu.ca/">Queen's University</a>
+### 2018-07-19   <br><br> Slides available at <a href="http://bit.ly/ties18" class="uri">http://bit.ly/ties18</a>
+
+---
+
+
+class: inverse
+
+
+
+## The Inspiration 
+
+&amp;nbsp; &amp;nbsp; &amp;nbsp; ![](figure/canada.png)
+
+&lt;br&gt;
+
+Health Canada and Environment and Climate Change Canada are
+currently funding a joint study on the risk 
+between exposure to particulate matter and human health effects.
+
+&lt;br&gt;
+
+--
+  - particulate matter **components**
+--
+
+  - historical component data is limited
+--
+
+  - satellite remote sensing data **may** be usable (&lt;a href="http://www.canue.ca"&gt;**will**&lt;/a&gt; be usable in the near future)
+
+---
+
+class: inverse
+
+## The Problem
+
+- large numbers of missing observations in the **local** data
+- coarse resolution for both temporal and spatial dimensions in the
+  **remotely** sensed data
+- mis-match in temporal coverage
+
+&lt;br&gt;
+--
+
+**Can the two be used to improve one another?**
+
+---
+
+class: inverse
+
+## Area of Interest
+
+For the purposes of this talk, we will examine data for the **Greater Toronto Area** (GTA), an
+amalgamated city centered on the City of Toronto, Ontario, Canada.
+
+&lt;br&gt;
+
+* Total population: 6.35 million people
+* Geographic area: 5,903 km&lt;sup&gt;2&lt;/sup&gt;
+* GDP: &amp;#36;313 billion Canadian dollars
+* Air Pollution Health Impact: approximately 1,300 premature deaths and 3,500 hospitalizations annually just in the City of Toronto
+
+---
+
+class: inverse
+
+## Ground-level Data Availability
+
+Ground-level observations at an hourly level exist back to 1980 for selected locations in the GTA
+for pollutants (annual averages given for 2010):
+
+&lt;br&gt;
+
+* NO&lt;sub&gt;2&lt;/sub&gt; (annual average: 20 ppb), NO and NO&lt;sub&gt;x&lt;/sub&gt;
+* O&lt;sub&gt;3&lt;/sub&gt; (annual average: 21 ppb)
+* SO&lt;sub&gt;2&lt;/sub&gt; (annual average: 1 ppb)
+
+--
+
+&lt;br&gt;
+
+and back to 2001 for PM&lt;sub&gt;2.5&lt;/sub&gt; (2010 annual average: 7 &amp;mu;g/m&lt;sup&gt;3&lt;/sup&gt;)
+
+&lt;br&gt;
+
+* some data is available before 2001, but it is highly erratic, and considered to be of poor quality.
+
+---
+
+class: middle, inverse
+
+## Transboundary Influence, Annual PM&lt;sub&gt;2.5&lt;/sub&gt;, Ontario
+
+&lt;img src="figure/toronto_annual_pm25.png" width="900"&gt;
+
+---
+
+class: inverse
+
+## National Air Pollution Surveillance stations
+
+&lt;img src="figure/toronto_stations_present.png" width="1000"&gt;
+
+---
+
+class: inverse
+
+## Remote sensing Data Availability
+
+* Lengthy delays in satellite data availability from collaborators
+* Replaced with Terra MODIS aerosol optical depth
+* Demonstrated on Toronto area for 2012 for this talk
+
+---
+
+class:inverse
+
+## Goal
+
+Previous work developed a bivariate interpolation algorithm, allowing
+the spectral structure of one time series to be used to reconstruct
+missing observations in a second.
+
+&lt;br&gt;
+
+--
+* Series do not have to share temporal sampling rate
+* Series do not have to be necessarily correlated
+* Leverages a robust estimate of the cross-spectral density
+
+---
+
+class: middle
+
+## Token Formulae
+
+&lt;img src="figure/formulae.png" width="1200"&gt;
+
+**Lots** of missing details - algebra is fairly nasty, but [code](http://github.com/wesleyburr/tsinterp/) available.
+
+---
+
+class: middle
+
+## Example: Noon Solar 10.7cm Flux, DRAO
+
+&lt;img src="figure/fluxEx1.png" width="1200"&gt;
+
+---
+
+class: middle
+
+## Half-Baked Idea
+
+&lt;center&gt;
+&lt;img src="figure/half_baked.jpg", width="350"&gt;
+&lt;/center&gt;
+
+&lt;br&gt;
+
+**Full Disclosure**: some of the following may not be fully baked.
+---
+
+layout: false
+class: inverse
+
+## Air Pollution - Methodology
+
+Thus, we have a bivariate interpolation algorithm. So, given
+**missing observations in the ground-level observations**
+we can iterate the algorithm convergence and obtain a contiguous series by using remotely sensed data as a secondary series for the interpolator.
+
+---
+
+class: middle
+
+## Organic Carbon, 2012, Toronto, Ontario (one station)
+
+&lt;img src="figure/original_OC.png" width="1000"&gt;
+
+---
+
+class: middle
+
+## Interpolated Organic Carbon, using MODIS
+
+&lt;img src="figure/interpolated_OC.png" width="1000"&gt;
+
+---
+
+class: inverse
+
+## Results
+
+Thus, using satellite data, **despite** the 
+
+&lt;br&gt;
+
+* Complicated relationship (correlated, not coincident)
+* Varying temporal resolution
+* Missing (at random?) observations
+
+&lt;br&gt;
+
+we can derive a contiguous **ground-level** particulate matter component series.
+
+---
+
+class: inverse
+
+## Then what?
+
+We can then turn this around, and use this contiguous series to generate:
+
+&lt;br&gt;
+
+* GEOS-CHEM (chemical transport) or equivalent
+* Land-Use Regression models
+* Spatial fields
+* Structural exploration (power spectra, EDA)
+
+---
+
+class: inverse
+
+## Is this **strictly necessary**?
+
+&lt;br&gt;
+
+* Possibly not!
+* Creative use of spatio-temporal statistics and field estimation may bypass need
+* However, contiguous data is still required for spectrum estimation, **and**
+* Scientific exploration of data is strongly aided by understanding of the periodic structure inherent in air pollution, generated as it is by humans
+
+---
+
+layout: false
+class: inverse, middle
+
+## Future Work
+
+While the interpolator(s) are functionally complete, tested, and ready
+for use, the application to remote-sensed data is still very much
+a Work In Progress.
+
+&lt;br&gt;
+
+* Extend to spatial considerations - multiple stations simultaneously?
+* Use as correction tool: given observation, delete, and interpolate - big differences imply unexpected observations (statistically)
+* Complete data set (apply to all stations in Canada)
+* Reverse order: use ground-level to detect and screen remotely-sensed data?
+
+---
+
+layout: false
+class: inverse, middle
+
+&lt;center&gt;
+&lt;a href="http://www.trentu.ca/math/"&gt;&lt;img src="figure/trent.png" style="width: 200px;"/&gt;&lt;/a&gt; &amp;emsp;&amp;emsp;
+&lt;a href="http://mast.queensu.ca/"&gt;&lt;img src="figure/queens_black.png" style="width: 155px;"/&gt;&lt;/a&gt; &amp;emsp;&amp;emsp;
+&lt;a href="https://creativecommons.org/licenses/by/4.0/"&gt;&lt;img src="figure/cc.png" style="width: 200px;"/&gt;&lt;/a&gt;
+&lt;/center&gt;
+
+## If you're interested, let me know - I'd love to talk more about this project!
+
+- Contact me: [Email](mailto:wesleyburr@trentu.ca) or [Twitter](https://twitter.com/wsburr)
+- Slides created via the R package [xaringan](https://github.com/yihui/xaringan) by Yihui Xie
+- Slides and source at &lt;http://bit.ly/ties18&gt;
+- R package at &lt;http://github.com/wesleyburr/tsinterp/&gt;
+
+&lt;br/&gt;
+
+This research was partially funded under a &lt;a href="http://www.canssi.ca/"&gt;CANSSI&lt;/a&gt; Collaborative Research Team Project,
+&lt;a href="http://www.canssi.ca/canssi-collaborative-research-team-projects/modern-spectrum-methods-in-time-series-analysis-physical-science-environmental-science-and-computer-modeling/"&gt;*Modern Spectrum Methods in Time Series Analysis*&lt;/a&gt;.
+    </textarea>
+<script src="remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "tomorrow-night-bright",
+"highlightLines": true,
+"highlightLanguage": "r"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
