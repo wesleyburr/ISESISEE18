@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Particulate Matter Observations: Imputation and Correction</title>
+    <title>Geometric and Statistical Methods for Aggregating Predictors in Pollutant Risk Models</title>
     <meta charset="utf-8">
-    <meta name="author" content="Wesley S. Burr – Trent University     wsburr     @wsburr    wesleyburr@trentu.ca  &amp;  Hwashin H. Shin – Health Canada &amp; Queen's University" />
+    <meta name="author" content="Wesley S. Burr – Trent University     wsburr     @wsburr    wesleyburr@trentu.ca  Hwashin H. Shin – EHSRB, Health Canada &amp; Queen's University" />
     <script src="https://use.fontawesome.com/5235085b15.js"></script>
     <link rel="stylesheet" href="example.css" type="text/css" />
   </head>
@@ -11,9 +11,9 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Particulate Matter Observations: Imputation and Correction
-### Wesley S. Burr – <a href="http://www.trentu.ca/math/">Trent University</a> <br> <a href="http://github.com/wesleyburr"><i class="fa fa-github fa-fw"></i>  wsburr</a><br> <a href="http://twitter.com/wsburr"> <i class="fa fa-twitter fa-fw"></i>  <span class="citation">@wsburr</span></a><br> <a href="mailto:wesleyburr@trentu.ca"><i class="fa fa-paper-plane fa-fw"></i>  wesleyburr@trentu.ca</a><br><br/>&amp;<br/><br/>Hwashin H. Shin – Health Canada &amp; <a href="http://mast.queensu.ca/">Queen's University</a>
-### 2018-07-19   <br><br> Slides available at <a href="http://bit.ly/ties18" class="uri">http://bit.ly/ties18</a>
+# Geometric and Statistical Methods for Aggregating Predictors in Pollutant Risk Models
+### Wesley S. Burr – <a href="http://www.trentu.ca/math/">Trent University</a> <br> <a href="http://github.com/wesleyburr"><i class="fa fa-github fa-fw"></i>  wsburr</a><br> <a href="http://twitter.com/wsburr"> <i class="fa fa-twitter fa-fw"></i>  <span class="citation">@wsburr</span></a><br> <a href="mailto:wesleyburr@trentu.ca"><i class="fa fa-paper-plane fa-fw"></i>  wesleyburr@trentu.ca</a><br /><br />Hwashin H. Shin – EHSRB, Health Canada &amp; <a href="http://mast.queensu.ca/">Queen's University</a>
+### 2018-08-27   <br><br> Slides available at <a href="http://bit.ly/isesisee18" class="uri">http://bit.ly/isesisee18</a>
 
 ---
 
@@ -22,248 +22,183 @@ class: inverse
 
 
 
-## The Inspiration 
 
-&amp;nbsp; &amp;nbsp; &amp;nbsp; ![](figure/canada.png)
 
-&lt;br&gt;
+## Multiple Pollutant Models
 
-Health Canada and Environment and Climate Change Canada are
-currently funding a joint study on the risk 
-between exposure to particulate matter and human health effects.
+**Problem**: Exposure assessment is challenging because "air pollution" is a complex mixture, not a static construct
 
-&lt;br&gt;
-
---
-  - particulate matter **components**
---
-
-  - historical component data is limited
---
-
-  - satellite remote sensing data **may** be usable (&lt;a href="http://www.canue.ca"&gt;**will**&lt;/a&gt; be usable in the near future)
+&lt;br /&gt;
+* historical models have either used single pollutants, or handwaved vigorously at the inclusion of multiple pollutants
+* obvious dependencies among pollutants, up to and including significant correlations and coherences
+* topic of active research among a number of research groups (e.g., HEI-funded projects in the USA, LSH&amp;TM, etc.)
 
 ---
 
 class: inverse
 
-## The Problem
+## Approach #1: Geometric
 
-- large numbers of missing observations in the **local** data
-- coarse resolution for both temporal and spatial dimensions in the
-  **remotely** sensed data
-- mis-match in temporal coverage
+**Genesis**: 
 
-&lt;br&gt;
---
-
-**Can the two be used to improve one another?**
+&lt;br /&gt;
+* air pollutants are correlated
+* the correlated structure interferes with the linearity of the model framework and estimation
+* why not try to leverage the correlation?
 
 ---
 
 class: inverse
 
-## Area of Interest
+## Sketch of Algorithm
 
-For the purposes of this talk, we will examine data for the **Greater Toronto Area** (GTA), an
-amalgamated city centered on the City of Toronto, Ontario, Canada.
+&lt;span style="font-size: 10px;"&gt;
+* begin by estimating two acute risk models, one for each pollutant, accounting for the usual confounding variables, obtaining risks `\(\phi_{01}\)` and `\(\phi_{02}\)`
+* estimate correlation (angle) between 1st and 2nd pollutant, `\(\phi_{12}\)` 
 
-&lt;br&gt;
+Then ... in `\(\mathbb{R}^3\)`:
 
-* Total population: 6.35 million people
-* Geographic area: 5,903 km&lt;sup&gt;2&lt;/sup&gt;
-* GDP: &amp;#36;313 billion Canadian dollars
-* Air Pollution Health Impact: approximately 1,300 premature deaths and 3,500 hospitalizations annually just in the City of Toronto
+* set pollutant risk vector `\(\vec{x}_1 = \vec{i} + \tan(\phi_{01})\vec{z}\)`
+* set pollutant risk vector `\(\vec{x}_2 = \cos(\phi_{12})\vec{i} +\)` &lt;br&gt; `\(\sin(\phi_{12})\vec{j} + \tan(\phi_{02})\vec{z}\)`
+&lt;/span&gt;
+---
+
+class: inverse
+
+## Functionally ...
+
+This approach is just treating time series realizations as vectors 
+
+&lt;br/&gt;
+* overall covariances interpreted as inner products, giving the structural issue  consideration as a rotational angle
+* magnitudes of individual models taken as vector magnitudes
+
+&lt;br /&gt;
+
+So how do we extract a singular representative of risk?
 
 ---
 
 class: inverse
 
-## Ground-level Data Availability
+## Aggregating
 
-Ground-level observations at an hourly level exist back to 1980 for selected locations in the GTA
-for pollutants (annual averages given for 2010):
+This approach gives a planar surface in `\(\mathbb{R}^3\)` for each pair of pollutants, and standardized model.
 
-&lt;br&gt;
+&lt;br /&gt;
 
-* NO&lt;sub&gt;2&lt;/sub&gt; (annual average: 20 ppb), NO and NO&lt;sub&gt;x&lt;/sub&gt;
-* O&lt;sub&gt;3&lt;/sub&gt; (annual average: 21 ppb)
-* SO&lt;sub&gt;2&lt;/sub&gt; (annual average: 1 ppb)
-
---
-
-&lt;br&gt;
-
-and back to 2001 for PM&lt;sub&gt;2.5&lt;/sub&gt; (2010 annual average: 7 &amp;mu;g/m&lt;sup&gt;3&lt;/sup&gt;)
-
-&lt;br&gt;
-
-* some data is available before 2001, but it is highly erratic, and considered to be of poor quality.
+**Options**:
+&lt;br/&gt;
+* standardize a direction, take slope of line in plane in that direction
+* bisect the two pollutants
+* choose a direction based on a secondary weighting scheme?
 
 ---
 
-class: middle, inverse
+class: center
 
-## Transboundary Influence, Annual PM&lt;sub&gt;2.5&lt;/sub&gt;, Ontario
+## Results: Toronto, Ontario - 1984-2012 (NO2 and O3)
 
-&lt;img src="figure/toronto_annual_pm25.png" width="900"&gt;
-
+&lt;img src="./figure/algebraic_toronto_only.png", width=850, height=520&gt;
+  
 ---
 
-class: inverse
+class: center
 
-## National Air Pollution Surveillance stations
+## Results: National Risks (Canada) - 1984-2012 (NO2 and O3)
 
-&lt;img src="figure/toronto_stations_present.png" width="1000"&gt;
+&lt;img src="./figure/algebraic_national.png", width = 850, height = 520&gt;
 
 ---
 
 class: inverse
 
-## Remote sensing Data Availability
+## Comments
 
-* Lengthy delays in satellite data availability from collaborators
-* Replaced with Terra MODIS aerosol optical depth
-* Demonstrated on Toronto area for 2012 for this talk
+This is very much still a work-in-progress.
+
+&lt;br /&gt;
+
+* How to interpret the combined risk: an increase of N units of combined concentration?
+* "User degrees-of-freedom": distinct choice of aggregate extraction
+* Crazy idea?
 
 ---
 
-class:inverse
+class: inverse
 
-## Goal
+## Synthetic Lag
 
-Previous work developed a bivariate interpolation algorithm, allowing
-the spectral structure of one time series to be used to reconstruct
-missing observations in a second.
+Recent development of a univariate distributed lag-like methodology for estimation of risk called *synthetic lag* naturally extends to multiple pollutants.
+
+&lt;br /&gt;
+
+* Identify coherent (frequency domain analogue of correlated) frequency bands
+* Phase align those bands of the *pollutant* individually with the phases of the *health effect*
+* Equivalent to decomposing pollutant series and lagging individual series
 
 &lt;br&gt;
+Burr, Shin and Takahara (2018) **Synthetically lagged models**. *Statistics &amp; Probability Letters*. DOI:10.1016/j.spl.2018.07.008
+---
 
---
-* Series do not have to share temporal sampling rate
-* Series do not have to be necessarily correlated
-* Leverages a robust estimate of the cross-spectral density
+class: inverse
+
+## Extending Synthetic Lag
+
+* Methodology naturally extends to arbitrary series
+* Identify bands from pollutant + health effect series, but then ...
+    - use the **pollutants** as inputs
+    - de-correlate pollutants by selectively aligning or masking bands, respectively
+
+&lt;br /&gt;
+
+* requires user choice of "primary" and "secondary" pollutants
+* allows traditional naive multiple pollutant models (e.g., GAM with two pollutant series)
+* interpretation remains complex
 
 ---
 
-class: middle
+class: inverse
 
-## Token Formulae
+## Interpretation?
 
-&lt;img src="figure/formulae.png" width="1200"&gt;
+So how might we interpret this approach?
 
-**Lots** of missing details - algebra is fairly nasty, but [code](http://github.com/wesleyburr/tsinterp/) available.
+&lt;br /&gt;
 
----
-
-class: middle
-
-## Example: Noon Solar 10.7cm Flux, DRAO
-
-&lt;img src="figure/fluxEx1.png" width="1200"&gt;
+* primary pollutant can be interpreted as traditionally (albeit with the phase alignment; so in a distributed lag sense)
+* secondary pollutant - "after accounting for"?
 
 ---
 
-class: middle
+class: center
 
-## Half-Baked Idea
+## Results: Toronto, Ontario - 1984-2012 (Ozone)
 
-&lt;center&gt;
-&lt;img src="figure/half_baked.jpg", width="350"&gt;
-&lt;/center&gt;
-
-&lt;br&gt;
-
-**Full Disclosure**: some of the following may not be fully baked.
+&lt;img src="./figure/torontoRisks_7yr_Ozone_compare.png", width=850, height=520&gt;
+  
 ---
+
+class: center
+
+## Results: Toronto, Ontario - 1984-2012 (NO2)
+
+&lt;img src="./figure/torontoRisks_7yr_NO2_compare.png", width = 850, height = 520&gt;
+
+---
+
 
 layout: false
-class: inverse
-
-## Air Pollution - Methodology
-
-Thus, we have a bivariate interpolation algorithm. So, given
-**missing observations in the ground-level observations**
-we can iterate the algorithm convergence and obtain a contiguous series by using remotely sensed data as a secondary series for the interpolator.
-
----
-
-class: middle
-
-## Organic Carbon, 2012, Toronto, Ontario (one station)
-
-&lt;img src="figure/original_OC.png" width="1000"&gt;
-
----
-
-class: middle
-
-## Interpolated Organic Carbon, using MODIS
-
-&lt;img src="figure/interpolated_OC.png" width="1000"&gt;
-
----
-
-class: inverse
-
-## Results
-
-Thus, using satellite data, **despite** the 
-
-&lt;br&gt;
-
-* Complicated relationship (correlated, not coincident)
-* Varying temporal resolution
-* Missing (at random?) observations
-
-&lt;br&gt;
-
-we can derive a contiguous **ground-level** particulate matter component series.
-
----
-
-class: inverse
-
-## Then what?
-
-We can then turn this around, and use this contiguous series to generate:
-
-&lt;br&gt;
-
-* GEOS-CHEM (chemical transport) or equivalent
-* Land-Use Regression models
-* Spatial fields
-* Structural exploration (power spectra, EDA)
-
----
-
-class: inverse
-
-## Is this **strictly necessary**?
-
-&lt;br&gt;
-
-* Possibly not!
-* Creative use of spatio-temporal statistics and field estimation may bypass need
-* However, contiguous data is still required for spectrum estimation, **and**
-* Scientific exploration of data is strongly aided by understanding of the periodic structure inherent in air pollution, generated as it is by humans
-
----
-
-layout: false
-class: inverse, middle
+class: inverse 
 
 ## Future Work
 
-While the interpolator(s) are functionally complete, tested, and ready
-for use, the application to remote-sensed data is still very much
-a Work In Progress.
-
 &lt;br&gt;
 
-* Extend to spatial considerations - multiple stations simultaneously?
-* Use as correction tool: given observation, delete, and interpolate - big differences imply unexpected observations (statistically)
-* Complete data set (apply to all stations in Canada)
-* Reverse order: use ground-level to detect and screen remotely-sensed data?
+* methodologically, both approaches "work"
+* interpretation remains complicated!
+* better, worse, comparison to other current work?
+* common components - worth extracting? (other talks in this session)
 
 ---
 
@@ -276,23 +211,22 @@ class: inverse, middle
 &lt;a href="https://creativecommons.org/licenses/by/4.0/"&gt;&lt;img src="figure/cc.png" style="width: 200px;"/&gt;&lt;/a&gt;
 &lt;/center&gt;
 
-## If you're interested, let me know - I'd love to talk more about this project!
+## If you're interested, let me know - I'd love to talk more about our work.
 
 - Contact me: [Email](mailto:wesleyburr@trentu.ca) or [Twitter](https://twitter.com/wsburr)
 - Slides created via the R package [xaringan](https://github.com/yihui/xaringan) by Yihui Xie
-- Slides and source at &lt;http://bit.ly/ties18&gt;
-- R package at &lt;http://github.com/wesleyburr/tsinterp/&gt;
+- Slides at &lt;http://bit.ly/isesisee18&gt;
 
 &lt;br/&gt;
 
-This research was partially funded under a &lt;a href="http://www.canssi.ca/"&gt;CANSSI&lt;/a&gt; Collaborative Research Team Project,
-&lt;a href="http://www.canssi.ca/canssi-collaborative-research-team-projects/modern-spectrum-methods-in-time-series-analysis-physical-science-environmental-science-and-computer-modeling/"&gt;*Modern Spectrum Methods in Time Series Analysis*&lt;/a&gt;.
+This research was partially funded under a CESI/CARA grant via the EHSRB of Health Canada.
     </textarea>
 <script src="remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "tomorrow-night-bright",
 "highlightLines": true,
-"highlightLanguage": "r"
+"highlightLanguage": "r",
+"ratio": "16:9"
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
@@ -327,7 +261,7 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

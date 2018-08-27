@@ -1,7 +1,7 @@
 ---
 title: "Geometric and Statistical Methods for Aggregating Predictors in Pollutant Risk Models"
-author: 'Wesley S. Burr -- <a href="http://www.trentu.ca/math/">Trent University</a> <br> <a href="http://github.com/wesleyburr"><i class="fa fa-github fa-fw"></i>&nbsp; wsburr</a><br> <a href="http://twitter.com/wsburr"> <i class="fa fa-twitter fa-fw"></i>&nbsp; @wsburr</a><br> <a href="mailto:wesleyburr@trentu.ca"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; wesleyburr@trentu.ca</a><br><br/>&amp;<br/><br/>Hwashin H. Shin -- EHSRB, Health Canada &amp; <a href="http://mast.queensu.ca/">Queen&#39;s University</a>'
-date: 2018-07-19 &ensp; <br><br> Slides available at <http://bit.ly/isesisee18>
+author: 'Wesley S. Burr -- <a href="http://www.trentu.ca/math/">Trent University</a> <br> <a href="http://github.com/wesleyburr"><i class="fa fa-github fa-fw"></i>&nbsp; wsburr</a><br> <a href="http://twitter.com/wsburr"> <i class="fa fa-twitter fa-fw"></i>&nbsp; @wsburr</a><br> <a href="mailto:wesleyburr@trentu.ca"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; wesleyburr@trentu.ca</a><br /><br />Hwashin H. Shin -- EHSRB, Health Canada &amp; <a href="http://mast.queensu.ca/">Queen&#39;s University</a>'
+date: 2018-08-27 &ensp; <br><br> Slides available at <http://bit.ly/isesisee18>
 output:
   xaringan::moon_reader:
     chakra: remark-latest.min.js
@@ -10,10 +10,13 @@ output:
       highlightStyle: tomorrow-night-bright
       highlightLines: true
       highlightLanguage: r
+      ratio: "16:9"
     includes:
       in_header: header.html
     countIncrementalSlides: false
     css: example.css
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+
 ---
 
 class: inverse
@@ -30,63 +33,179 @@ theme_set(theme_gray(base_size = 24))
 
 ## Multiple Pollutant Models
 
-**Problem**
+**Problem**: Exposure assessment is challenging because "air pollution" is a complex mixture, not a static construct
 
-<center>
-Exposure assessment is challenging because "air pollution" is a complex mixture.
-</center>
-
+<br />
 * historical models have either used single pollutants, or handwaved vigorously at the inclusion of multiple pollutants
 * obvious dependencies among pollutants, up to and including significant correlations and coherences
-* topic of active research among a number of research groups
+* topic of active research among a number of research groups (e.g., HEI-funded projects in the USA, LSH&TM, etc.)
 
---
+---
+
 class: inverse
 
 ## Approach #1: Geometric
-In this talk, we examine two new methods for combining such correlated air pollutant predictors in risk models: a geometric and a statistical approach. In the geometric approach we consider the correlated structure of the pollutants embedded in a higher-dimensional space, and combine and interpret the risk estimates as existing on a surface in this space. In the statistical approach, we use the recently developed synthetic lag algorithm for estimation of the phase lag of individual components of the series, and de-correlate the air pollutants so as to make their risks approximately independent. The two methods are then compared and contrasted using several real-world air pollutant and health effect data sets.
- 
---
 
-class: inverse
+**Genesis**: 
 
-## slide
-
----
-
-class: inverse
-
-## slide
-
---
-
-class: middle, inverse
-
-## slide
-
+<br />
+* air pollutants are correlated
+* the correlated structure interferes with the linearity of the model framework and estimation
+* why not try to leverage the correlation?
 
 ---
 
 class: inverse
 
+## Sketch of Algorithm
 
-## slide
+<span style="font-size: 10px;">
+* begin by estimating two acute risk models, one for each pollutant, accounting for the usual confounding variables, obtaining risks $\phi_{01}$ and $\phi_{02}$
+* estimate correlation (angle) between 1st and 2nd pollutant, $\phi_{12}$ 
+
+Then ... in $\mathbb{R}^3$:
+
+* set pollutant risk vector $\vec{x}_1 = \vec{i} + \tan(\phi_{01})\vec{z}$
+* set pollutant risk vector $\vec{x}_2 = \cos(\phi_{12})\vec{i} +$ <br> $\sin(\phi_{12})\vec{j} + \tan(\phi_{02})\vec{z}$
+</span>
+---
+
+class: inverse
+
+## Functionally ...
+
+This approach is just treating time series realizations as vectors 
+
+<br/>
+* overall covariances interpreted as inner products, giving the structural issue  consideration as a rotational angle
+* magnitudes of individual models taken as vector magnitudes
+
+<br />
+
+So how do we extract a singular representative of risk?
 
 ---
+
+class: inverse
+
+## Aggregating
+
+This approach gives a planar surface in $\mathbb{R}^3$ for each pair of pollutants, and standardized model.
+
+<br />
+
+**Options**:
+<br/>
+* standardize a direction, take slope of line in plane in that direction
+* bisect the two pollutants
+* choose a direction based on a secondary weighting scheme?
+
+---
+
+class: center
+
+## Results: Toronto, Ontario - 1984-2012 (NO2 and O3)
+
+<img src="./figure/algebraic_toronto_only.png", width=850, height=520>
+  
+---
+
+class: center
+
+## Results: National Risks (Canada) - 1984-2012 (NO2 and O3)
+
+<img src="./figure/algebraic_national.png", width = 850, height = 520>
+
+---
+
+class: inverse
+
+## Comments
+
+This is very much still a work-in-progress.
+
+<br />
+
+* How to interpret the combined risk: an increase of N units of combined concentration?
+* "User degrees-of-freedom": distinct choice of aggregate extraction
+* Crazy idea?
+
+---
+
+class: inverse
+
+## Synthetic Lag
+
+Recent development of a univariate distributed lag-like methodology for estimation of risk called *synthetic lag* naturally extends to multiple pollutants.
+
+<br />
+
+* Identify coherent (frequency domain analogue of correlated) frequency bands
+* Phase align those bands of the *pollutant* individually with the phases of the *health effect*
+* Equivalent to decomposing pollutant series and lagging individual series
+
+<br>
+Burr, Shin and Takahara (2018) **Synthetically lagged models**. *Statistics & Probability Letters*. DOI:10.1016/j.spl.2018.07.008
+---
+
+class: inverse
+
+## Extending Synthetic Lag
+
+* Methodology naturally extends to arbitrary series
+* Identify bands from pollutant + health effect series, but then ...
+    - use the **pollutants** as inputs
+    - de-correlate pollutants by selectively aligning or masking bands, respectively
+
+<br />
+
+* requires user choice of "primary" and "secondary" pollutants
+* allows traditional naive multiple pollutant models (e.g., GAM with two pollutant series)
+* interpretation remains complex
+
+---
+
+class: inverse
+
+## Interpretation?
+
+So how might we interpret this approach?
+
+<br />
+
+* primary pollutant can be interpreted as traditionally (albeit with the phase alignment; so in a distributed lag sense)
+* secondary pollutant - "after accounting for"?
+
+---
+
+class: center
+
+## Results: Toronto, Ontario - 1984-2012 (Ozone)
+
+<img src="./figure/torontoRisks_7yr_Ozone_compare.png", width=850, height=520>
+  
+---
+
+class: center
+
+## Results: Toronto, Ontario - 1984-2012 (NO2)
+
+<img src="./figure/torontoRisks_7yr_NO2_compare.png", width = 850, height = 520>
+
+---
+
 
 layout: false
-class: inverse, middle
+class: inverse 
 
 ## Future Work
 
-What to do, what to do
-
 <br>
 
-* point1
-* point2
-* point3
-* point4
+* methodologically, both approaches "work"
+* interpretation remains complicated!
+* better, worse, comparison to other current work?
+* common components - worth extracting? (other talks in this session)
 
 ---
 
@@ -99,7 +218,7 @@ class: inverse, middle
 <a href="https://creativecommons.org/licenses/by/4.0/"><img src="figure/cc.png" style="width: 200px;"/></a>
 </center>
 
-## If you're interested, let me know - I'd love to talk more about our work!
+## If you're interested, let me know - I'd love to talk more about our work.
 
 - Contact me: [Email](mailto:wesleyburr@trentu.ca) or [Twitter](https://twitter.com/wsburr)
 - Slides created via the R package [xaringan](https://github.com/yihui/xaringan) by Yihui Xie
