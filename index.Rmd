@@ -1,7 +1,7 @@
 ---
-title: "Particulate Matter Observations: Imputation and Correction"
-author: 'Wesley S. Burr -- <a href="http://www.trentu.ca/math/">Trent University</a> <br> <a href="http://github.com/wesleyburr"><i class="fa fa-github fa-fw"></i>&nbsp; wsburr</a><br> <a href="http://twitter.com/wsburr"> <i class="fa fa-twitter fa-fw"></i>&nbsp; @wsburr</a><br> <a href="mailto:wesleyburr@trentu.ca"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; wesleyburr@trentu.ca</a><br><br/>&amp;<br/><br/>Hwashin H. Shin -- Health Canada &amp; <a href="http://mast.queensu.ca/">Queen&#39;s University</a>'
-date: 2018-07-19 &ensp; <br><br> Slides available at <http://bit.ly/ties18>
+title: "Geometric and Statistical Methods for Aggregating Predictors in Pollutant Risk Models"
+author: 'Wesley S. Burr -- <a href="http://www.trentu.ca/math/">Trent University</a> <br> <a href="http://github.com/wesleyburr"><i class="fa fa-github fa-fw"></i>&nbsp; wsburr</a><br> <a href="http://twitter.com/wsburr"> <i class="fa fa-twitter fa-fw"></i>&nbsp; @wsburr</a><br> <a href="mailto:wesleyburr@trentu.ca"><i class="fa fa-paper-plane fa-fw"></i>&nbsp; wesleyburr@trentu.ca</a><br><br/>&amp;<br/><br/>Hwashin H. Shin -- EHSRB, Health Canada &amp; <a href="http://mast.queensu.ca/">Queen&#39;s University</a>'
+date: 2018-07-19 &ensp; <br><br> Slides available at <http://bit.ly/isesisee18>
 output:
   xaringan::moon_reader:
     chakra: remark-latest.min.js
@@ -25,6 +25,11 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.width=10.5, fig.height=4
   comment=NA, rows.print=16)
 theme_set(theme_gray(base_size = 24))
 ```
+
+
+ Multiple pollutant models are increasingly being researched for estimating population health risk due to air pollution while integrating the effects of more than one pollutant at a time. These models have varying approaches for dealing with the inherent correlated structure of air pollutants. In this talk, we examine two new methods for combining such correlated air pollutant predictors in risk models: a geometric and a statistical approach. In the geometric approach we consider the correlated structure of the pollutants embedded in a higher-dimensional space, and combine and interpret the risk estimates as existing on a surface in this space. In the statistical approach, we use the recently developed synthetic lag algorithm for estimation of the phase lag of individual components of the series, and de-correlate the air pollutants so as to make their risks approximately independent. The two methods are then compared and contrasted using several real-world air pollutant and health effect data sets.
+ 
+ 
 
 ## The Inspiration 
 
